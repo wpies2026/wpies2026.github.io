@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="pt-BR"><head><base target="_top"><meta charset="utf-8"><title>Conexão WPIES</title></head><body>
+<script>
+'use strict';
+// A origem e o canal vêm do servidor, depois de validados em doGet.
+const ORIGIN = <?!= JSON.stringify(origin) ?>;
+const CHANNEL = <?!= JSON.stringify(channel) ?>;
+const seen = new Set();
+window.addEventListener('message', function(event) {
+  if(event.origin!==ORIGIN || event.source!==window.top)return;
+  const d=event.data;
+  if(!d || d.type!=='wpies:request' || d.channel!==CHANNEL || typeof d.id!=='string' || d.id.length>120 || seen.has(d.id))return;
+  seen.add(d.id);if(seen.size>1000)seen.delete(seen.values().next().value);
+  const request=Object.assign({},d.request,{origin:ORIGIN,channel:CHANNEL});
+  const reply=result=>window.top.postMessage({type:'wpies:result',channel:CHANNEL,id:d.id,result:result},ORIGIN);
+  google.script.run.withSuccessHandler(reply).withFailureHandler(function(){reply({ok:false,error:{code:'SERVICE_ERROR',message:'O serviço Google não concluiu a operação. Atualize a lista antes de tentar novamente.'}});}).api(request);
+});
+window.top.postMessage({type:'wpies:ready',channel:CHANNEL},ORIGIN);
+</script>
+</body></html>

@@ -1,0 +1,21 @@
+(function (global) {
+  'use strict';
+  const STATUS = Object.freeze({received:'Recebido',in_review:'Em revisão',changes_requested:'Ajustes solicitados',accepted:'Aceito',not_accepted:'Não aceito'});
+  const TYPES = Object.freeze({published:'Relato de pesquisa publicada',progress:'Relatório de andamento',preprint:'Amostra de pré-print'});
+  const TRACKS = ['Engenharia de Software Aplicada','Metodologias e Tecnologias para Engenharia de Software','Inteligência Artificial'];
+  const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const institutionalEmail = value => /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@unipampa\.edu\.br$/i.test(String(value).trim());
+  const safeUrl = value => { try { const u = new URL(value); return u.protocol === 'https:' ? u.href : '#'; } catch { return '#'; } };
+  const date = (value,options={}) => value ? new Intl.DateTimeFormat('pt-BR',{day:'2-digit',month:'short',year:'numeric',timeZone:'America/Sao_Paulo',...options}).format(new Date(value)) : 'A definir';
+  const dateTime = value => date(value,{hour:'2-digit',minute:'2-digit'});
+  const isOpen = (config,now=Date.now()) => config.submissionsOpen === true && Number.isFinite(Date.parse(config.submissionDeadline)) && now <= Date.parse(config.submissionDeadline);
+  const canEdit = (record,config,now=Date.now()) => record.status === 'received' ? isOpen(config,now) : record.status === 'changes_requested' && now <= Date.parse(config.correctionDeadline || config.submissionDeadline);
+  const stats = rows => Object.keys(STATUS).reduce((a,k)=>(a[k]=rows.filter(r=>r.status===k).length,a),{total:rows.length});
+  const csvCell = v => { let s=String(v??''); if (/^[\s]*[=+@\-]/.test(s)) s="'"+s; return '"'+s.replace(/"/g,'""')+'"'; };
+  const toCsv = rows => '\uFEFF'+[['Protocolo','Título','Estudante','E-mail','Orientador','Modalidade','Situação','Páginas','Enviado em'],...rows.map(r=>[r.id,r.title,r.authorName,r.authorEmail,r.advisorName,TYPES[r.kind],STATUS[r.status],r.pageCount,r.createdAt])].map(r=>r.map(csvCell).join(';')).join('\r\n');
+  const toLocalInput = value => { if(!value)return '';const d=new Date(new Date(value).toLocaleString('en-US',{timeZone:'America/Sao_Paulo'}));return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}T${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`; };
+  const fromLocalInput = value => value ? new Date(value+':00-03:00').toISOString() : '';
+  const deadlineFromLocalInput = value => value ? new Date(value+':59-03:00').toISOString() : '';
+  const uuid = () => {const b=global.crypto.getRandomValues(new Uint8Array(16));b[6]=(b[6]&15)|64;b[8]=(b[8]&63)|128;const h=Array.from(b,v=>v.toString(16).padStart(2,'0')).join('');return h.slice(0,8)+'-'+h.slice(8,12)+'-'+h.slice(12,16)+'-'+h.slice(16,20)+'-'+h.slice(20);};
+  global.WPIES = {STATUS,TYPES,TRACKS,escape,institutionalEmail,safeUrl,date,dateTime,isOpen,canEdit,stats,toCsv,toLocalInput,fromLocalInput,deadlineFromLocalInput,uuid};
+})(typeof window !== 'undefined' ? window : globalThis);
