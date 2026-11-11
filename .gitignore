@@ -1,0 +1,8 @@
+.DS_Store
+node_modules/
+test-results/
+.clasp.json
+.env*
+dist/
+.openai/
+

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#05429D">
+  <meta name="description" content="2º WPIES. Um encontro interno do PPGES para compartilhar pesquisas, conectar ideias e apresentar trabalhos em Engenharia de Software. Submissões de 4 a 6 páginas até 20 de novembro de 2026.">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://accounts.google.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; img-src 'self' data: https://*.googleusercontent.com https://accounts.google.com; font-src 'self'; frame-src https://script.google.com https://*.googleusercontent.com https://accounts.google.com; connect-src 'self' https://accounts.google.com https://*.googleapis.com; base-uri 'self'; form-action 'self'; object-src 'none'">
+  <title>2º WPIES · Pesquisa em movimento · PPGES</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preload" href="assets/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <script src="config.js" defer></script>
+  <script src="js/core.js" defer></script>
+  <script src="js/api.js" defer></script>
+  <script src="js/demo.js" defer></script>
+  <script src="js/views.js" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Ir para o conteúdo</a>
+  <div id="demo-bar" hidden></div>
+  <div id="announcement" class="announcement"><span class="live-dot"></span><span id="announcement-copy">Chamada de apresentações aberta · até <strong>20 de novembro</strong></span><a href="#/submit">Submeter trabalho <span aria-hidden="true">↗</span></a></div>
+  <header class="site-header">
+    <div class="header-inner wrap">
+      <a class="brand" href="#/" aria-label="WPIES, página inicial"><img src="assets/ppges-horizontal.png" alt="PPGES — Programa de Pós-Graduação em Engenharia de Software" width="2690" height="1134"></a>
+      <nav class="desktop-nav" aria-label="Navegação principal"><a href="#evento">O encontro</a><a href="#trabalhos">Chamada de trabalhos</a><a href="#datas">Datas</a></nav>
+      <div class="header-actions"><button class="button button-quiet" data-action="portal">Área do participante <span aria-hidden="true">↗</span></button><button class="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Abrir menu"><span></span><span></span></button></div>
+    </div>
+    <nav id="mobile-nav" aria-label="Navegação móvel" hidden><a href="#evento">O encontro</a><a href="#trabalhos">Chamada de trabalhos</a><a href="#datas">Datas importantes</a><a href="#/mine">Área do participante</a><button class="button button-text" id="mobile-logout" data-action="logout" hidden>Sair da conta ↗</button></nav>
+  </header>
+  <main id="main" tabindex="-1"></main>
+  <footer class="site-footer"><div class="wrap footer-top"><a href="https://cursos.unipampa.edu.br/cursos/ppges/" target="_blank" rel="noopener noreferrer"><img src="assets/ppges-horizontal.png" alt="PPGES" width="2690" height="1134"></a><p>Pesquisa aplicada.<br>Conhecimento compartilhado.</p><div><a href="mailto:ppges@unipampa.edu.br" id="footer-contact">Fale com a organização ↗</a><a href="#/privacy">Privacidade e uso dos dados</a><a href="?demo=organizer#/admin">Explorar demonstração</a></div></div><div class="wrap footer-bottom"><span>2º WPIES · PPGES / UNIPAMPA · Campus Alegrete</span><span>Um encontro da nossa comunidade.</span></div></footer>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <dialog id="app-dialog" class="app-dialog"><div id="dialog-content"></div></dialog>
+  <noscript><p class="notice">Ative o JavaScript para acessar a chamada de trabalhos e a área de submissões.</p></noscript>
+</body>
+</html>
