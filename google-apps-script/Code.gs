@@ -35,7 +35,7 @@ function initializeProject() {
     const submissions=ss.getSheets()[0];submissions.setName('Submissions');submissions.appendRow(RECORD_HEADERS_);submissions.setFrozenRows(1);
     const settings=ss.insertSheet('Settings');settings.appendRow(['key','json']);
     const audit=ss.insertSheet('Audit');audit.appendRow(['timestamp','actorEmail','action','recordId','details']);audit.setFrozenRows(1);
-    const config={version:1,eventName:'2º Workshop em Pesquisa e Inovação em Engenharia de Software',edition:'2026',submissionDeadline:'2026-11-20T23:59:59-03:00',reviewDeadline:'',correctionDeadline:'',eventDate:'',eventLocation:'',contactEmail:'ppges@unipampa.edu.br',templateUrl:'https://pt.overleaf.com/read/bybwwbcbhhwn#86f79a',submissionsOpen:true,advisors:[],organizers:[effective],ownerEmail:effective};
+    const config={version:1,eventName:'2º Workshop em Pesquisa e Inovação em Engenharia de Software',edition:'2026',submissionDeadline:'2026-11-20T23:59:59-03:00',reviewDeadline:'2026-11-25T23:59:59-03:00',correctionDeadline:'',eventDate:'',eventLocation:'',contactEmail:'ppges@unipampa.edu.br',templateUrl:'https://pt.overleaf.com/read/bybwwbcbhhwn#86f79a',submissionsOpen:true,advisors:[],organizers:[effective],ownerEmail:effective};
     settings.appendRow(['config',JSON.stringify(config)]);
     props.setProperties({OWNER_EMAIL:effective,DRIVE_FOLDER_ID:folder.getId(),SPREADSHEET_ID:ss.getId()});
     DriveApp.getFileById(ss.getId()).moveTo(folder);

@@ -6,7 +6,7 @@ window.WPIES_CONFIG = Object.freeze({
     eventName: "2º Workshop em Pesquisa e Inovação em Engenharia de Software",
     edition: "2026",
     submissionDeadline: "2026-11-20T23:59:59-03:00",
-    reviewDeadline: "",
+    reviewDeadline: "2026-11-25T23:59:59-03:00",
     correctionDeadline: "",
     eventDate: "",
     eventLocation: "",
