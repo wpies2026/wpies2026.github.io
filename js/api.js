@@ -26,7 +26,9 @@
       if(d.type==='wpies:ready' && !this.target && this.belongsToFrame(event.source)){
         this.target=event.source;this.origin=event.origin;clearTimeout(this.timer);this.resolveReady();return;
       }
-      if(event.source!==this.target || event.origin!==this.origin || d.type!=='wpies:result')return;
+      // O HtmlService usa janelas internas que podem mudar durante a navegação.
+      if(event.origin!==this.origin || d.type!=='wpies:result')return;
+      if(event.source!==this.target && !this.belongsToFrame(event.source))return;
       const pending=this.pending.get(d.id);if(!pending)return;
       clearTimeout(pending.timer);this.pending.delete(d.id);
       if(d.result?.ok)pending.resolve(d.result.data);
